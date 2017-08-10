@@ -10,6 +10,7 @@ use App\Transfer;
 use App\Transaction;
 use App\Http\Requests;
 
+
 class TransactionController extends Controller
 {
     /**
@@ -18,15 +19,77 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function WalletList($id){
-        /*$data = Wallet::find($id)->transaction()->get()->toArray();*/
-        $data = DB::table('transactions')->where('id_wallet', $id)->where('user_id', Auth::user()->id)->get();
-        return view('wallet.transaction.list', compact('data'));
+    public function Wallet_Be_List($id_wallet){
+        $data = DB::table('transactions')->where('id_wallet', $id_wallet)->where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $this->id_wallet = $id_wallet;
+        return view('wallet.transaction.list', compact('data', 'id_wallet'));
     }
+
+    public function Wallet_Be_Create($id_wallet)
+    {
+        $this->id_wallet = $id_wallet;
+        $cate = DB::table('categories')->where('user_id', Auth::user()->id)->get();
+        $wallet = Wallet::find($id_wallet);
+        return view('wallet.transaction.add_specific_wallet', compact('cate', 'wallet', 'id_wallet'));
+    }
+
+    public function Wallet_Be_Store(Request $request, $id_wallet)
+    {
+        // save transaction
+        $transaction = new Transaction;
+        $transaction->id_category = $request->sltCate;
+        $transaction->id_wallet = $id_wallet;
+        $transaction->amount = str_replace(',', '', $request->txtAmount);
+        $transaction->user_id = Auth::user()->id;
+        $transaction->description = $request->txtDescription;
+        $transaction->with_who = $request->txtWithWho;
+        $transaction->save();
+        // end save transaction
+        
+        // save wallet
+        $wallet = Wallet::find($id_wallet);
+        if($request->sltKindCate == 1)
+        {
+            $wallet->amount = $wallet->amount + str_replace(',', '', $request->txtAmount);
+        }
+        else{
+            $wallet->amount = $wallet->amount - str_replace(',', '', $request->txtAmount);
+        }
+        $wallet->save();
+        // end save wallet
+
+        return redirect()->route('wallet_be_list', $id_wallet);
+        
+    }
+
+    public function Transaction_Be_Delete($id_transaction, $id_wallet)
+    {
+        $transaction = Transaction::findOrFail($id_transaction);
+        $this->id_wallet = $id_wallet;
+
+        $category_of_transaction = DB::table('categories')->where('id', $transaction->id_category)->first();
+        $wallet = Wallet::find($id_wallet);
+        if($category_of_transaction->kind == 1)
+        {
+            $wallet->amount = $wallet->amount - $transaction->amount; 
+        }
+        else{
+            $wallet->amount = $wallet->amount + $transaction->amount; 
+        }
+        $wallet->save();
+
+        $transaction->delete();
+        return redirect()->route('wallet_be_list', $id_wallet);
+    }
+
+
 
     public function index()
     {
-        
+       /* $data = DB::table('transactions')->where('user_id', Auth::user()->id)->selectRaw("month(timestamp) as month")->get();
+*/
+        $data = DB::table('transactions') ->select(DB::raw('extract(month from created_at) as monthmonth'))->where('monthmonth', '==',  8)->orderBy('monthmonth')->get();
+        return view('wallet.transaction.list_all', compact('data'));
     }
 
     /**
@@ -77,9 +140,10 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_transaction, $id_wallet)
     {
-        //
+        $transaction = DB::table('transactions')->where('id', $id_transaction)->first();
+        return view('wallet.transaction.edit', compact('transaction', 'id_wallet'));
     }
 
     /**
@@ -89,9 +153,29 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_transaction, $id_wallet)
     {
-        //
+        $transaction = Transaction::find($id_transaction);
+        $transaction->id_category = $request->sltCate;
+        $transaction->id_wallet = $id_wallet;
+        $transaction->amount = str_replace(',', '', $request->txtAmount);
+        $transaction->description = $request->txtDescription;
+        $transaction->with_who = $request->txtWithWho;
+        $transaction->save();
+
+        // save wallet
+        $wallet = Wallet::find($id_wallet);
+        if($request->sltKindCate == 1)
+        {
+            $wallet->amount = $wallet->amount + str_replace(',', '', $request->txtAmount);
+        }
+        else{
+            $wallet->amount = $wallet->amount - str_replace(',', '', $request->txtAmount);
+        }
+        $wallet->save();
+        // end save wallet
+
+        return redirect()->route('wallet_be_list', $id_wallet);
     }
 
     /**
@@ -102,6 +186,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
