@@ -34,9 +34,9 @@
 
             @foreach($cate_thu as $value)
               <tr>
-                <td><a style="color:#007E33;" href="{{url('transaction_belong_category', $value->id)}}">  {{$value->name}}  </td>
+                <td><a style="color:#007E33;" href="{{url('transaction_belong_category', $value->id)}}">  {{$value->name}} </a> </td>
                 <td>
-                @if($value->parent_id == 0 || $value->parent_id == 1)
+                @if($value->parent_id == 0)
                     {!! "None" !!}
                 @else
                     <?php $parent = DB::table('categories')->where('id',$value->parent_id)->first();
@@ -93,8 +93,8 @@
               <tr>
                 <td><a style="color:#d9534f;" href="{{url('transaction_belong_category', $value->id)}}">  {{$value->name}} </a> </td>             
                 <td>
-                  @if($value->parent_id == 0 || $value->parent_id == 1)
-                      {!! "None" !!}
+                  @if($value->parent_id == 0)
+                    {!! "None" !!}
                   @else
                       <?php $parent = DB::table('categories')->where('id',$value->parent_id)->first();
                           echo $parent->name;
@@ -110,7 +110,7 @@
                       echo "-".adddotstring($total_amount_category);
                  ?>
 
-                 </td>
+                </td>
 
                 <td> {{$value->created_at}} </td>
                 <td>

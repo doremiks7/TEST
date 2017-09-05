@@ -12,6 +12,7 @@ use App\Http\Requests\LoginRequest;
 use App\ActivationService;
 use Auth;
 use Illuminate\Support\Facades\Input;
+use Log;
 
 
 class AuthController extends Controller
@@ -44,7 +45,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-/*    public function __construct()
+    /*public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
@@ -91,31 +92,14 @@ class AuthController extends Controller
         abort(404);
     }
 
-    public function postLogin(Request $request)
-    {
-        
-        $throttles = $this->isUsingThrottlesLoginsTrait();
-
-        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
-            return $this->sendLockoutResponse($request);
-        }
-
-        $credentials = $this->getCredentials($request);
-
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
-        }
-
-        if ($throttles) {
-            $this->incrementLoginAttempts($request);
-        }
-
-
-        return redirect($this->loginPath)
-            ->withInput($request->only('username', 'remember'))
-            ->withErrors([
-                'username' => $this->getFailedLoginMessage(),
-            ]);
+    public function messageWarning(\Nexmo\Client $nexmo, $to){
+        $message = $nexmo->message()->send([
+            'to' => $to,
+            'from' => '84961915162',
+            'text' => '[WARNING Dangerous] Somebody attempting to login into your account, please check. Thanks!'
+        ]);
+        Log::info('sent message: ' . $message['message-id']);
+        return redirect()->route('auth.login')->with('warning', 'You have just logged so many, please wait 300s to login again');
     }
     
     /**
@@ -131,7 +115,7 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'phone' => 'integer|min:10',
-            'avatar' => 'image'
+            'image' => 'image'
         ],
         [
             'name.required' => 'Need to A Name',
@@ -141,7 +125,7 @@ class AuthController extends Controller
             'password.min' =>  'Password must be longer 6 character',
             'password.confirmed' => 'Password cofirm is not match',
             'phone.min' => 'Phone must be longer 10 character',
-            'avatar.image' => 'It is not right picture'
+            'image.image' => 'It is not right picture'
         ]
 
         );

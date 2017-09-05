@@ -3,7 +3,13 @@
 
 <div class="panel panel-default col-md-offset-4 col-md-4" style="margin-top: 40px;">
     <table class="table table-bordered">
-    <thead>
+    <h2>List Wallet</h2>
+     @if(Session::has('flash-message'))
+      <div class="alert alert-{!! Session::get('flash-level') !!}">       
+          {!! Session::get('flash-message') !!}
+      </div>
+    @endif
+    <thead style="border-top: 1px solid #ddd;">
       <tr>
         <th>Tên ví</th>
         <th>Số tiền</th>
@@ -27,7 +33,7 @@
        {{ csrf_field() }}
           @include('blocks.error')
       
-       <p1 class="btn btn-primary " style="margin: 10px 0px 10px 10px;"> Chuyển tiền </p1>
+       <h1 style="margin: 10px 0px 10px 10px;"> Money Transfer </h1>
        <div class="container col-md-12">
           <div class="form-group" style="color: #FF8800;">
             <label for="name warning-color">Tên ví chuyển</label>

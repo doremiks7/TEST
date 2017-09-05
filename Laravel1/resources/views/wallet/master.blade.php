@@ -39,6 +39,7 @@ ul li {
 
 a{
     color: #333;
+    text-decoration: none;
 }
 
 .color-money{
@@ -53,6 +54,90 @@ a{
 .color-income{
     color: #007E33;
 }
+
+
+.pagination{
+    color: white;
+    text-align:center;
+    margin: 0px auto;
+}
+
+.pagination li{
+    list-style: none;
+    float: left;;
+    width: 20px;
+    height: 20px;
+    border: 1px solid white;
+    background: blue;
+}
+
+.pagination li:hover{
+    background: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+}
+
+.pagination ul {
+    border:0px;
+    padding: 0px;
+}
+
+  
+.pagination_1{
+    color: white;
+    text-align:center;
+    margin: 0px auto;
+}
+
+.pagination_1 li{
+    list-style: none;
+    float: left;;
+    width: 20px;
+    height: 20px;
+    border: 1px solid white;
+    background: blue;
+}
+
+.pagination_1 li:hover{
+    background: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+}
+
+.pagination_1 ul {
+    border:0px;
+    padding: 0px;
+}
+
+
+.pagination_2{
+    color: white;
+    text-align:center;
+    margin: 0px auto;
+}
+
+.pagination_2 li{
+    list-style: none;
+    float: left;;
+    width: 20px;
+    height: 20px;
+    border: 1px solid white;
+    background: blue;
+}
+
+.pagination_2 li:hover{
+    background: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+}
+
+.pagination_2 ul {
+    border:0px;
+    padding: 0px;
+}
 </style>
     <div id="wrapper">
 
@@ -65,51 +150,23 @@ a{
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin Area</a>
+                <a class="navbar-brand" href="{{url('/')}}">Admin Area</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-smile-o"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
+        
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
+                        
+                        <li>
+                            <a href="{{ route('wallet.index') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Wallet<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="#" data-toggle="collapse" data-target="#wallet"><i class="fa fa-bar-chart-o fa-fw"></i> Wallet<span class="fa fa-angle-right" style="float:right;"></span></a>
+                            <ul id="wallet" class="nav nav-second-level collapse" aria-expanded="false" style>
                                 <li>
                                     <a href="{{ route('wallet.index') }}">List Wallet</a>
                                 </li>
@@ -120,8 +177,8 @@ a{
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i> Category<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="#" data-toggle="collapse" data-target="#category"><i class="fa fa-cube fa-fw"></i> Category<span class="fa fa-angle-right " style="float:right;"></span></a>
+                            <ul id="category" class="nav nav-second-level collapse" aria-expanded="true" >
                                 <li>
                                     <a href="{{route('category.index')}}">List Category</a>
                                 </li>
@@ -132,13 +189,25 @@ a{
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> Transaction<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="#" data-toggle="collapse" data-target="#transaction"><i class="fa fa-users fa-fw"></i> Transaction<span class="fa fa-angle-right" style="float:right;"></span></a>
+                            <ul id="transaction" class="nav nav-second-level collapse" aria-expanded="true">
                                 <li>
-                                    <a href="#">List Transaction</a>
+                                    <a href="{{route('transaction.index')}}">List Transaction</a>
                                 </li>
                                 <li>
-                                    <a href="#">Add Transaction</a>
+                                    <a href="{{route('transaction.create')}}">Add Transaction</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#transfer"><i class="fa fa-dollar"></i> Transfer <span class="fa fa-angle-right" style="float:right;"></span></a>
+                            <ul id="transfer" class="nav nav-second-level collapse" aria-expanded="true">
+                                <li>
+                                    <a href="{{route('historyTransfer')}}">List Transfer</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('getTransfer')}}">Transfer Money</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -179,6 +248,13 @@ a{
                 responsive: true
         });
     });
+
+    </script>
+    <script type="text/javascript">
+        function myfunction(name_id){
+            alert(name_id);
+        document.getElementById(name_id).style.display = "block";
+    }
     </script>
 
 <script type="text/javascript">
@@ -218,5 +294,48 @@ $(function() {
             element.addClass('active');
         }
     });
+</script>
+
+<script>
+ (function($){
+
+        $.fn.customPaginate = function(options)
+        {
+            var paginationContainer = this;
+            var itemsToPaginate; 
+            var defaults = {
+                itemsPerPage : 3
+            };
+
+            var settings = {};
+            $.extend(settings, defaults, options);
+
+            var itemsPerPage = settings.itemsPerPage;
+
+            itemsToPaginate = $(settings.itemsToPaginate);
+            var numberOfPaginateLinks = Math.ceil((itemsToPaginate.length / itemsPerPage));
+            $("<ul></ul>").prependTo(paginationContainer);
+            
+            for(var index = 0;index < numberOfPaginateLinks; index++)
+            {
+                paginationContainer.find("ul").append("<li>" + (index+1) + "</li>");
+            }
+
+            itemsToPaginate.filter(":gt(" + (itemsPerPage - 1) + ")").hide();
+
+            paginationContainer.find("ul li").on("click", function(){
+                var linkNumber = $(this).text();
+                var itemsToHide = itemsToPaginate.filter(":lt(" + ((linkNumber-1) * itemsPerPage) + ")");
+
+                $.merge(itemsToHide, itemsToPaginate.filter(":gt(" + ((linkNumber * itemsPerPage) - 1) + ")"));
+
+                itemsToHide.hide();
+
+                var itemsToShow = itemsToPaginate.not(itemsToHide);
+                itemsToShow.show();
+            });
+        }   
+
+}(jQuery));
 </script>
 @endsection

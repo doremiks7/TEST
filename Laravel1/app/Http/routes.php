@@ -16,14 +16,17 @@ Route::get('/', function () {
 });
 
 Route::auth();
+Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
 
 Route::get('/home', 'HomeController@index');
 
 Route::get('user/activation/{token}', 'Auth\AuthController@activateUser')->name('user.activate');
+Route::get('sms/{phone_to}',['as' => 'send_message_warning', 'uses' => 'Auth\AuthController@messageWarning']);
+
 
 /*information*/
-Route::get('information/{id}',['as' => 'getUpdate', 'uses' =>'InfomationController@getUpdate'] );
-Route::post('information/{id}',['as' => 'postUpdate', 'uses' =>'InfomationController@postUpdate'] );
+Route::get('information/{id}',['as' => 'getUpdate', 'uses' =>'InfomationController@getUpdate']);
+Route::post('information/{id}',['as' => 'postUpdate', 'uses' =>'InfomationController@postUpdate'] )->where(['tuoi' => '[0-9]+']);
 /*end information*/
 
 /* change password */
@@ -36,6 +39,7 @@ Route::get('gettransfer',['as' => 'getTransfer', 'uses' => 'TransferController@g
 Route::post('posttransfer',['as' => 'postTransfer', 'uses' =>'TransferController@postTransfer']);
 Route::get('history_transfer', ['as' => 'historyTransfer', 'uses' => 'TransferController@history_transfer']);
 Route::post('delete_history_transfer/{id}', ['as' => 'deleteHistoryTransfer', 'uses' => 'TransferController@delete_history_transfer']);
+Route::get('/sms/send/{to}', ['as' => 'send_message', 'uses' => 'TransferController@sendMessage']);
 
 /*end transfer*/
 
@@ -60,3 +64,5 @@ Route::get('transaction_belong_category/{id_category}', function($id_category){
 Route::get('master', function(){
 	return view('wallet.master');
 });
+
+/*send message if login too many times*/

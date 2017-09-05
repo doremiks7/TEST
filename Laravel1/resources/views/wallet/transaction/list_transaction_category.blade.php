@@ -3,6 +3,12 @@
 
   <h2> List Transaction </h2>
 
+  @if(Session::has('flash-message'))
+        <div class="alert alert-{!! Session::get('flash-level') !!}">       
+            {!! Session::get('flash-message') !!}
+        </div>
+  @endif
+
 <?php $data = DB::table('transactions')->where('id_category', $id_category)->get(); ?>
 
 <table class="table table-bordered" style="margin-top: 30px;">
@@ -11,15 +17,17 @@
                 <th>Description</th>
                 <th>Cùng ai</th>
                 <th>Số tiền</th>
+                <th>Tên ví</th>
                 <th>Ngày tạo</th>
-                <th>Thay đổi</th>
                 
               </tr>
             </thead>
             <tbody>
             
             @foreach($data as $value)
-            <?php $cate = DB::table('categories')->where('id', $value->id_category)->first()?>
+            <?php $cate = DB::table('categories')->where('id', $value->id_category)->first();
+                  $name_wallet = DB::table('wallets')->where('id', $value->id_wallet)->first();
+            ?>
               <tr>
                 <td> 
                   <ul style=" padding-left: 0px;"> 
@@ -29,10 +37,14 @@
                 </td>
 
                 <td> {{$value->with_who}} </td>
-                <td> {{$value->amount}} </td>
-                <td> {{$value->created_at}} </td>
-                <td> {{$value->updated_at}} </td>
-                
+              @if($cate->kind == 1)
+                <td style="color:blue;"> +{{adddotstring($value->amount)}} </td>
+              @else
+                <td style="color:rgb(208, 2, 27);"> -{{adddotstring($value->amount)}} </td>
+              @endif
+
+                <td style="font-size: 30px; font-weight: bold;"> {{$name_wallet->name}} </td>
+                <td> {{$value->created_at}} </td>            
               </tr>
 
             @endforeach

@@ -9,6 +9,9 @@ use App\Wallet;
 use App\Transfer;
 use App\Transaction;
 use App\Http\Requests;
+use App\Http\Requests\TransactionRequest;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\AbstractPaginator;
 
 
 class TransactionController extends Controller
@@ -33,7 +36,7 @@ class TransactionController extends Controller
         return view('wallet.transaction.add_specific_wallet', compact('cate', 'wallet', 'id_wallet'));
     }
 
-    public function Wallet_Be_Store(Request $request, $id_wallet)
+    public function Wallet_Be_Store(TransactionRequest $request, $id_wallet)
     {
         // save transaction
         $transaction = new Transaction;
@@ -43,6 +46,7 @@ class TransactionController extends Controller
         $transaction->user_id = Auth::user()->id;
         $transaction->description = $request->txtDescription;
         $transaction->with_who = $request->txtWithWho;
+        $transaction->created_at = $request->txtTransactionDay;
         $transaction->save();
         // end save transaction
         
@@ -88,7 +92,7 @@ class TransactionController extends Controller
     {
        /* $data = DB::table('transactions')->where('user_id', Auth::user()->id)->selectRaw("month(timestamp) as month")->get();
 */
-        $data = DB::table('transactions') ->select(DB::raw('extract(month from created_at) as monthmonth'))->where('monthmonth', '==',  8)->orderBy('monthmonth')->get();
+        $data = DB::table('transactions')->where('user_id', Auth::user()->id)->orderBy('created_at','desc')->get();
         return view('wallet.transaction.list_all', compact('data'));
     }
 
@@ -110,7 +114,7 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
         $transac = new Transaction;
         $transac->id_wallet = $request->sltWallet;
@@ -119,6 +123,15 @@ class TransactionController extends Controller
         $transac->user_id = Auth::user()->id;
         $transac->description = $request->txtDescription;
         $transac->with_who = $request->txtWithWho;
+
+        $wallet = Wallet::find($transac->id_wallet);
+        if($request->sltKindCate == 1){
+            $wallet->amount = $wallet->amount +  $transac->amount;
+        }
+        else{
+            $wallet->amount = $wallet->amount -  $transac->amount;
+        }
+        $wallet->save();
         $transac->save();
         return redirect()->route('transaction.index');
     }
@@ -153,24 +166,26 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id_transaction, $id_wallet)
+    public function update(TransactionRequest $request, $id_transaction, $id_wallet)
     {
         $transaction = Transaction::find($id_transaction);
+        $amount_temp = $transaction->amount;
         $transaction->id_category = $request->sltCate;
         $transaction->id_wallet = $id_wallet;
         $transaction->amount = str_replace(',', '', $request->txtAmount);
         $transaction->description = $request->txtDescription;
         $transaction->with_who = $request->txtWithWho;
+        $transaction->created_at = $request->txtTransactionDay;
         $transaction->save();
 
         // save wallet
         $wallet = Wallet::find($id_wallet);
         if($request->sltKindCate == 1)
         {
-            $wallet->amount = $wallet->amount + str_replace(',', '', $request->txtAmount);
+            $wallet->amount = $wallet->amount + str_replace(',', '', $request->txtAmount) - $amount_temp;
         }
         else{
-            $wallet->amount = $wallet->amount - str_replace(',', '', $request->txtAmount);
+            $wallet->amount = $wallet->amount - str_replace(',', '', $request->txtAmount) + $amount_temp;
         }
         $wallet->save();
         // end save wallet
@@ -186,6 +201,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-
+        
     }
 }
