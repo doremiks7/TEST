@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+@section('pixel', '840px')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-7" style="height: 500px;"> @include('templade/standard') </div>
+        <div class="col-md-5">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
+                <div class="panel-heading" style="background: #5cb85c; color: white;">Register</div>
+                <div class="panel-body" style="background: #C6F4D2;">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         @include('error')
@@ -90,7 +91,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     <i class="fa fa-btn fa-user"></i> Register
                                 </button>
                             </div>
@@ -101,4 +102,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

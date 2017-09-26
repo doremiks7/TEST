@@ -72,7 +72,7 @@
                     @else
                         
                                 <li><a href="http://twitter.com"> <i class="fa fa-twitter-square"> </i> </a></li>
-                                <li><a href="http://twitter.com"> <i class="fa fa-facebook-official"> </i> </a></li>
+                                <li><a href="http://facebook.com"> <i class="fa fa-facebook-official"> </i> </a></li>
                                 <li><a href="http://instagram.com"><i class="fa fa-instagram" ></i></a></li>
                         
 
@@ -97,9 +97,8 @@
     <!-- clock normal -->
     <div id="clock" style="font-size: 30px; display: inline-block; padding-left: 15px;" ></div>
 
-
-    @yield('content')
-
+        @yield('content')
+        
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

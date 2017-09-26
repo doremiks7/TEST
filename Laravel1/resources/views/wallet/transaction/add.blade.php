@@ -50,6 +50,10 @@
             <input type="text" class="form-control" name="txtWithWho">
           </div>
           <div class="form-group">
+            <label for="name">Ngày giao dịch</label>
+            <input type="datetime" class="form-control" name="txtTransactionDay" value="<?php echo date('Y/m/d H:i:s') ?>">
+          </div>
+          <div class="form-group">
             <label for="submit"></label>
             <input class="btn btn-warning" type="submit" class="form-control">
           </div>

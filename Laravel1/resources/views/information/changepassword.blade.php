@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+@section('pixel', '780px')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+        <div class="col-md-7" > @include('templade/standard') </div>
+        <div class="col-md-5" >
+            <div class="panel panel-success">
                 <div class="panel-heading">Your Infomation</div>
-                <div class="panel-body">
+                <div class="panel-body" style="height: 500px;">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('postChangePassword') }}">
                         {{ csrf_field() }}
                         @include('error')
@@ -56,7 +58,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     <i class="fa fa-btn fa-user"></i> Save & Change
                                 </button>
                             </div>

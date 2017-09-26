@@ -68,7 +68,8 @@ a{
     width: 20px;
     height: 20px;
     border: 1px solid white;
-    background: blue;
+    border-radius: 1px;
+    background: #337ab7;
 }
 
 .pagination li:hover{
@@ -96,7 +97,7 @@ a{
     width: 20px;
     height: 20px;
     border: 1px solid white;
-    background: blue;
+    background: #337ab7;
 }
 
 .pagination_1 li:hover{
@@ -124,7 +125,7 @@ a{
     width: 20px;
     height: 20px;
     border: 1px solid white;
-    background: blue;
+    background: #337ab7;
 }
 
 .pagination_2 li:hover{

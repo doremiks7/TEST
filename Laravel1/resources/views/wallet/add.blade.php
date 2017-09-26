@@ -27,7 +27,7 @@
       <form action="{!! route('wallet.store') !!}" method="POST">
        {{ csrf_field() }}
         @include('blocks.error')
-        <h1> Thêm mới ví </h1>
+        <h1> Add new Wallet </h1>
        <div class="container col-md-12" style="margin-top: 20px;">
           <div class="form-group">
             <label for="name">Tên ví</label>

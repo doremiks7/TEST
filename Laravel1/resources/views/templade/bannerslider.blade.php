@@ -97,9 +97,9 @@
         </div>
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1300px;height:500px;overflow:hidden;">
             <div>
-                <img data-u="image" src="public/img/red.jpg" />
-                <div style="position:absolute;top:30px;left:30px;width:480px;height:120px;z-index:0;font-size:50px;color:#ffffff;line-height:60px;">Welcome to Website Management Buying And Selling </div>
-                <div style="position:absolute;top:300px;left:30px;width:480px;height:120px;z-index:0;font-size:30px;color:#ffffff;line-height:38px;">Anything you want, we'll provide for you as soon as posible we can</div>
+                <img data-u="image" src="public/img/purple.jpg" />
+                <div style="position:absolute;top:30px;left:30px;width:480px;height:120px;z-index:0;font-size:50px;color:#ffffff;line-height:60px;">Frendship often ends in love, but love in frendship-never</div>
+                <div style="position:absolute;top:300px;left:30px;width:480px;height:120px;z-index:0;font-size:30px;color:#ffffff;line-height:38px;">You know when you love someone when you want them to be happy event if their happiness means that you’re not part of it</div>
                 <div style="position:absolute;top:120px;left:650px;width:470px;height:220px;z-index:0;">
                     <img style="position:absolute;top:0px;left:0px;width:470px;height:220px;z-index:0;" src="public/img/c-phone-horizontal.png" />
                     <div style="position:absolute;top:4px;left:45px;width:379px;height:213px;z-index:0; overflow:hidden;">
@@ -111,10 +111,12 @@
                 </div>
             </div>
             <div>
-                <img data-u="image" src="public/img/purple.jpg" />
+                <img data-u="image" src="public/img/red.jpg" />
+                <div style="position:absolute;top:300px;left:30px;width:480px;height:120px;z-index:0;font-size:30px;color:#ffffff;line-height:38px;">Hate has a reason for everithing bot love is unreasonable</div>
             </div>
             <div>
                 <img data-u="image" src="public/img/blue.jpg" />
+                <div style="position:absolute;top:300px;left:30px;width:480px;height:120px;z-index:0;font-size:30px;color:#ffffff;line-height:38px;">I looked at your face… my heart jumped all over the place</div>
             </div>
             <a data-u="any" href="https://www.jssor.com" style="display:none">slider bootstrap</a>
         </div>

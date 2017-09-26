@@ -43,7 +43,7 @@
           </div>
           <div class="form-group">
             <label for="name">Ngày giao dịch</label>
-            <input type="date" class="form-control" name="txtTransactionDay">
+            <input type="datetime" class="form-control" name="txtTransactionDay" value="<?php echo date('Y/m/d H:i:s'); ?>">
           </div>
           <div class="form-group">
             <label for="submit"></label>

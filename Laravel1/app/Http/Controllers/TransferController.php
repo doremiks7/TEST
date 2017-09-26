@@ -47,7 +47,7 @@ class TransferController extends Controller
         $transfer->save();
 
         $to = Auth::user()->phone;
-        if($amount > 10000000)
+        if($amount >= 100000000)
         {
             return redirect()->route('send_message', $to);
         }
@@ -70,7 +70,7 @@ class TransferController extends Controller
         $message = $nexmo->message()->send([
             'to' => $to,
             'from' => '84961915162',
-            'text' => '[WARNING] You have sent > 10.000.000 dong several minutes ago, please check again to sure that you have just sent money to another wallet'
+            'text' => '[WARNING] You have sent > 100.000.000 dong several minutes ago, please check again to sure that you have just sent money to another wallet'
         ]);
         Log::info('sent message: ' . $message['message-id']);
         

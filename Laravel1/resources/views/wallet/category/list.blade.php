@@ -1,7 +1,7 @@
 @extends('wallet.master')
 @section('noidung')
     <h2>List Category</h2>
-    <p><button class="btn btn-primary" style="float:right;" onclick="window.location='{{URL::route('category.create')}}'"> Thêm mới </button></p>
+    <p><button class="btn btn-primary" style="float:right;" onclick="window.location='{{URL::route('category.create')}}'"><i class="glyphicon glyphicon-plus-sign"> </i> Thêm mới </button></p>
 
     <table class="table table-border">
       <div class="tab">

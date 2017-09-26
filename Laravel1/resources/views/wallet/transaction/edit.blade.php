@@ -51,7 +51,7 @@
           </div>
           <div class="form-group">
             <label for="name">Ngày giao dịch</label>
-            <input type="date" class="form-control" name="txtTransactionDay" value="{{$transaction->created_at}}">
+            <input type="datetime" class="form-control" name="txtTransactionDay" value="{{$transaction->updated_at}}">
           </div>
           <div class="form-group">
             <label for="submit"></label>

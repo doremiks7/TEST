@@ -70,7 +70,7 @@ class AuthController extends Controller
 
         $this->activationService->sendActivationMail($user);
 
-        return redirect('/login')->with('status', 'We sent you an activation code. Check your email.');
+        return redirect('/login')->with(['flash-level' => 'success', 'flash-message' => 'We have sent you an activation code. Check your email.']);
     }
 
     public function authenticated(Request $request, $user)
@@ -78,7 +78,7 @@ class AuthController extends Controller
         if (!$user->activated) {
             $this->activationService->sendActivationMail($user);
             auth()->logout();
-            return back()->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+            return back()->with(['flash-level' => 'warning', 'flash-message' => 'You need to confirm your account. We have sent you an activation code, please check your email.']);
         }
         return redirect()->intended($this->redirectPath());
     }
@@ -99,7 +99,7 @@ class AuthController extends Controller
             'text' => '[WARNING Dangerous] Somebody attempting to login into your account, please check. Thanks!'
         ]);
         Log::info('sent message: ' . $message['message-id']);
-        return redirect()->route('auth.login')->with('warning', 'You have just logged so many, please wait 300s to login again');
+        return redirect()->route('auth.login')->with(['flash-level' => 'warning', 'flash-message' => 'You have just logged so many, please wait 300s to login again.']);
     }
     
     /**
@@ -166,3 +166,5 @@ class AuthController extends Controller
     }
 
 }
+
+
